@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-const formDetailsValidator = Joi.object({
+const formDetailsValidator = Joi.object().keys({
   title: Joi.string().required().messages({
     "string.empty": `title cannot be empty`,
     "any.required": `Title is required`,

@@ -1,5 +1,5 @@
 const passport = require("passport");
-const { default: globalValidator } = require("../../Utils/globalValidators");
+const globalValidator = require("../../Utils/globalValidators");
 const loginValidator = require("../validators/loginValidator");
 const userFind = require("../db/userFind");
 const generateToken = require("./generateToken");
