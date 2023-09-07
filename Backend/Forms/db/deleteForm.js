@@ -1,5 +1,5 @@
 const { INVALID_FORM_ID } = require("../../Utils/constants");
-const { default: CustomError } = require("../../Utils/customError");
+const CustomError = require("../../Utils/customError");
 const Form = require("../model/formModel");
 
 const deleteForm = async (formId) => {

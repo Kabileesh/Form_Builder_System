@@ -1,10 +1,10 @@
 const Submission = require("../model/submissionModel");
 
-const saveResponse = async (formId, formData) => {
+const saveResponse = async (formId, formData, id) => {
   const newSubmission = new Submission({
     formId: formId,
     formData: formData,
-    submittedBy: req.user.id,
+    submittedBy: id,
   });
 
   await newSubmission.save();

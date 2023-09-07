@@ -4,7 +4,8 @@ const getFormService = require("../services/getFormService");
 
 const getFormController = asyncErrorHandler(async (req, res) => {
   const { formId } = req.query;
-  const { form, formData } = await getFormService(formId);
+  const id = req.user.id;
+  const { form, formData } = await getFormService(formId, id);
   res.stauts(FETCH_SUCCESS.status).send(form, formData);
 });
 

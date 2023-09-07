@@ -5,7 +5,7 @@ const { Strategy: BearerStrategy } = require("passport-http-bearer");
 const jwt = require("jsonwebtoken");
 const { UNAUTHORIZED } = require("../Utils/constants");
 const userFind = require("../auth/db/userFind");
-const { default: CustomError } = require("../Utils/customError");
+const CustomError = require("../Utils/customError");
 
 const credentials = async (passport) => {
   passport.use(
@@ -13,7 +13,7 @@ const credentials = async (passport) => {
       { usernameField: "username", passwordField: "password", session: false },
       async (username, password, done) => {
         const user = await userFind(username);
-        if (!user) {
+        if (JSON.stringify(user) === '{}') {
           throw new CustomError(UNAUTHORIZED.message, UNAUTHORIZED.status);
         }
         const passwordMatch = await bcrypt.compare(password, user.hash);

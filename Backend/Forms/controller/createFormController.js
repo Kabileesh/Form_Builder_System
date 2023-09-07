@@ -4,8 +4,9 @@ const createFormService = require("../services/createFormService");
 
 const createForm = asyncErrorHandler(async (req, res, next) => {
   const { title, description, fields } = req.body;
+  const id = req.user.id;
 
-  const form = await createFormService(title, description, fields);
+  const form = await createFormService(title, description, fields, id);
 
   return res
     .status(FORM_CREATE_SUCCESS.status)

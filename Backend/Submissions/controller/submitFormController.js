@@ -4,7 +4,8 @@ const submitFormService = require("../services/submitFormService");
 
 const submitForm = asyncErrorHandler(async (req, res, next) => {
   const { formId, formData } = req.body;
-  const formResponse = await submitFormService(formId, formData);
+  const id = req.user.id;
+  const formResponse = await submitFormService(formId, formData, id);
 
   return res
     .status(RESPONSE_SUBMIT_SUCCESS.status)

@@ -5,18 +5,13 @@ import { getUserState, userLogin } from "../../store/slices/userSlice";
 import { SUCCEEDED } from "../../Utils/constants";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [userName, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const {
-    name: userName,
-    id: userId,
-    error: errMsg,
-    status,
-  } = useSelector(getUserState);
+  const { username, id, error, status } = useSelector(getUserState);
 
   const usernameHandler = (event) => {
     setUsername(event.target.value);
@@ -26,20 +21,19 @@ const Login = () => {
     setPassword(event.target.value);
   };
 
-  const submitHandler = async (event) => {
-    event.preventDefault();
-
-    if (username.trim === "") return;
+  const submitHandler = async () => {
+    if (userName.trim === "") return;
 
     const user = {
-      username: username.trim(),
+      username: userName.trim(),
       password: password,
     };
 
-    dispatch(userLogin(user));
+    await dispatch(userLogin(user));
+    console.log(username, id);
   };
 
-  if (status === SUCCEEDED && userName && userId) {
+  if (status === SUCCEEDED && username && id) {
     navigate("/home");
     return;
   }
@@ -59,7 +53,12 @@ const Login = () => {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" onSubmit={submitHandler}>
+          <form
+            className="space-y-6"
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
+          >
             <div>
               <label
                 htmlFor="email"
@@ -74,7 +73,7 @@ const Login = () => {
                   type="email"
                   autoComplete="email"
                   onChange={usernameHandler}
-                  value={username}
+                  value={userName}
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -104,12 +103,13 @@ const Login = () => {
               </div>
             </div>
             <center>
-              <p className="text-red-500">{errMsg}</p>
+              <p className="text-red-500">{error}</p>
             </center>
             <div>
               <button
-                type="submit"
+                type="button"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={submitHandler}
               >
                 Sign in
               </button>

@@ -4,26 +4,41 @@ const registerValidator = require("../validators/registerValidator");
 const hashPassword = require("../utils/hashPassword");
 const createUser = require("../db/createUser");
 const generateToken = require("./generateToken");
+const CustomError = require("../../Utils/customError");
+const { UNAUTHORIZED } = require("../../Utils/constants");
 
-const registerService = async (username, name, password) => {
-  console.log("Into register");
+const registerService = async (
+  username,
+  name,
+  password,
+  req,
+  res,
+  callback
+) => {
   if (globalValidator(registerValidator, { username, password })) {
     const hash = await hashPassword(password);
-    console.log("Into register 1");
     const newUser = await createUser(username, name, hash);
-    console.log("Registered");
     passport.authenticate(
       "local",
       { session: false },
       (req,
       res,
       async (err) => {
-        const accessToken = generateToken();
+        if (err) {
+          throw new CustomError(UNAUTHORIZED.message, UNAUTHORIZED.status);
+        }
+        const username = req.user.username;
+        const id = req.user.id;
+        const accessToken = generateToken(id, username);
         const user = {
           username: newUser.username,
-          name: newUser.name,
+          _id: id,
         };
-        return { user, accessToken };
+        const result = {
+          user: user,
+          accessToken: accessToken,
+        };
+        callback(null, result);
       })
     );
   }

@@ -9,10 +9,10 @@ import {
 } from "../../Utils/constants";
 
 const initialState = {
-  name: null,
-  id: null,
+  username: "",
+  id: "",
   status: IDLE,
-  error: null,
+  error: "",
 };
 
 export const userLogin = createAsyncThunk("user/userLogin", async (user) => {
@@ -36,7 +36,6 @@ export const userRegister = createAsyncThunk(
   "user/userRegister",
   async (user) => {
     try {
-      console.log("Into register", user);
       const response = await axios.post("/register", user);
       if (
         response?.status === REGISTER_SUCCESS.status &&
@@ -58,13 +57,13 @@ const userSlice = createSlice({
   initialState: initialState,
   reducers: {
     addInfo(state, action) {
-      state.name = action.payload.name;
-      state.id = action.payload.id;
+      state.username = action.payload.username;
+      state.id = action.payload._id;
       state.status = SUCCEEDED;
       state.error = null;
     },
     removeInfo(state) {
-      state.name = null;
+      state.username = null;
       state.id = null;
       state.status = IDLE;
       state.error = null;
@@ -73,27 +72,27 @@ const userSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(userLogin.fulfilled, (state, action) => {
-        state.name = action.payload.name;
-        state.id = action.payload.id;
+        state.username = action.payload.username;
+        state.id = action.payload._id;
         state.status = SUCCEEDED;
         state.error = null;
       })
       .addCase(userLogin.rejected, (state, action) => {
         state.error = action.error.message;
         state.id = null;
-        state.name = null;
+        state.username = null;
         state.status = FAILED;
       })
       .addCase(userRegister.fulfilled, (state, action) => {
-        state.name = action.payload.name;
-        state.id = action.payload.id;
+        state.username = action.payload.username;
+        state.id = action.payload._id;
         state.status = SUCCEEDED;
         state.error = null;
       })
       .addCase(userRegister.rejected, (state, action) => {
         state.error = action.error.message;
         state.id = null;
-        state.name = null;
+        state.username = null;
         state.status = FAILED;
       });
   },

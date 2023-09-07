@@ -1,7 +1,7 @@
 const Form = require("../model/formModel");
 
-const saveForm = async (title, description, fields) => {
-  const user_id = req.user.id;
+const saveForm = async (title, description, fields, id) => {
+  const user_id = id;
   const newForm = new Form({
     title: title,
     description: description,

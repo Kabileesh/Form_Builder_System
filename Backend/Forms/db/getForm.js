@@ -1,5 +1,5 @@
 const { FORM_NOT_FOUND } = require("../../Utils/constants");
-const { default: CustomError } = require("../../Utils/customError");
+const CustomError = require("../../Utils/customError");
 const Form = require("../model/formModel");
 
 const getForm = async (formId) => {

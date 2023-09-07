@@ -1,5 +1,5 @@
 const { UNAUTHORIZED } = require("../../Utils/constants");
-const { default: CustomError } = require("../../Utils/customError");
+const CustomError = require("../../Utils/customError");
 const User = require("../model/userModel");
 
 const userFindById = async (id) => {

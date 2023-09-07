@@ -57,9 +57,10 @@ const Register = () => {
     };
 
     dispatch(userRegister(user));
+    console.log(status, username, userId);
   };
 
-  if (status === SUCCEEDED && username && userId) {
+  if (status === SUCCEEDED && username) {
     navigate("/home");
     return;
   }
