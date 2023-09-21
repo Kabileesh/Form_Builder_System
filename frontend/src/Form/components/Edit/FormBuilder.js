@@ -57,7 +57,12 @@ const FormBuilder = () => {
       question: "Enter your email address ",
       required: true,
     };
-    const formDetails = [emailField].concat(getFormDetails);
+    const formFields = [emailField].concat(getFormDetails.formFields);
+    const updatedFormFields = formFields.map(({ id, ...rest }) => rest);
+    const formDetails = {
+      ...getFormDetails,
+      formFields: updatedFormFields,
+    };
     try {
       const response = await axios.post("/create-form", formDetails);
       if (
@@ -67,10 +72,9 @@ const FormBuilder = () => {
         navigate("/view-forms");
       }
     } catch (err) {
-      // const error = err;
-      // error.message = err.response.data?.message;
-      // throw error;
-      console.log(err);
+      const error = err;
+      error.message = err.response.data?.message;
+      throw error;
     }
   };
 

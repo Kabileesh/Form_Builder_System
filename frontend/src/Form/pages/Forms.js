@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "../../axios/axiosConfig";
 import { FETCH_SUCCESS } from "../../Utils/constants";
+import Header from "../../User/layouts/Header";
 
 const Forms = () => {
   const [isLoading, setLoading] = useState(false);
@@ -27,6 +28,7 @@ const Forms = () => {
 
   return (
     <>
+      <Header />
       {isLoading ? (
         <div class="text-center">
           <div role="status">
@@ -50,9 +52,11 @@ const Forms = () => {
           </div>
         </div>
       ) : forms.length === 0 ? (
-        <p> No forms Yet...</p>
+        <div>
+          <p> No forms Yet...</p>
+        </div>
       ) : (
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg my-7 mx-8">
           <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
@@ -77,7 +81,7 @@ const Forms = () => {
                     >
                       {form.title}
                     </th>
-                    <td class="px-6 py-4">{form.createdAt}</td>
+                    <td class="px-6 py-4">{form.createdAt.split("T")[0]}</td>
                     <td class="px-6 py-4">
                       <Link to={"/view-responses"}>View Responses</Link>
                     </td>

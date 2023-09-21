@@ -1,29 +1,25 @@
 const mongoose = require("mongoose");
 
-const fieldSchema = new mongoose.Schema({
-  question: {
-    type: String,
-    required: true,
+const fieldSchema = new mongoose.Schema(
+  {
+    question: {
+      type: String,
+      required: true,
+    },
+    type: {
+      type: String,
+      required: true,
+    },
+    options: [String],
+    required: {
+      type: Boolean,
+      default: false,
+    },
+    imageData: {
+      type: Buffer,
+    },
   },
-  type: {
-    type: String,
-    required: true,
-  },
-  label: {
-    type: String,
-    required: true,
-  },
-  placeholder: {
-    type: String,
-  },
-  options: [String],
-  required: {
-    type: Boolean,
-    default: false,
-  },
-  imageData: {
-    type: Buffer,
-  },
-});
+  { _id: false }
+);
 
 module.exports = fieldSchema;

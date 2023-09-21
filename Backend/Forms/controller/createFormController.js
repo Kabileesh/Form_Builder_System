@@ -2,8 +2,10 @@ const asyncErrorHandler = require("../../Utils/asyncErrorHandler");
 const { FORM_CREATE_SUCCESS } = require("../../Utils/constants");
 const createFormService = require("../services/createFormService");
 
-const createForm = asyncErrorHandler(async (req, res, next) => {
-  const { title, description, fields } = req.body;
+const createForm = asyncErrorHandler(async (req, res) => {
+  const title = req.body.formTitle;
+  const description = req.body.formDescription;
+  const fields = req.body.formFields;
   const id = req.user.id;
 
   const form = await createFormService(title, description, fields, id);
