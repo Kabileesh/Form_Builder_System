@@ -63,19 +63,19 @@ const Question = (props) => {
             onChange={handleInputChange}
           />
           {isRequired ? (
-            <span class="text-red-500">*</span>
+            <span className="text-red-500">*</span>
           ) : (
-            <span class="text-white">*</span>
+            <span className="text-white">*</span>
           )}
-          <label class="relative inline-flex items-center mb-5 cursor-pointer">
+          <label className="relative inline-flex items-center mb-5 cursor-pointer">
             <input
               type="checkbox"
               value=""
               onClick={toggleHandler}
-              class="sr-only peer"
+              className="sr-only peer"
             />
-            <div class="w-9 h-5 bg-white peer-focus:outline-none peer-focus:ring-4 rounded-full peer dark:bg-gray-400 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-            <span class="ml-3 text-sm font-medium text-black">Required</span>
+            <div className="w-9 h-5 bg-white peer-focus:outline-none peer-focus:ring-4 rounded-full peer dark:bg-gray-400 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+            <span className="ml-3 text-sm font-medium text-black">Required</span>
           </label>
         </div>
         <div className="container mx-auto px-4">

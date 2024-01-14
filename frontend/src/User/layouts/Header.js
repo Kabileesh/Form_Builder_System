@@ -41,9 +41,9 @@ const Header = () => {
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {navigation.map((item) => (
+                    {navigation.map((item, id) => (
                       <Link
-                        key={item.name}
+                        key={id}
                         to={item.href}
                         className={classNames(
                           item.current
@@ -132,10 +132,10 @@ const Header = () => {
 
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigation.map((item) => (
-                <Link to={item.href}>
+              {navigation.map((item, id) => (
+                <Link key={id} to={item.href}>
                   <Disclosure.Button
-                    key={item.name}
+                    key={id}
                     as="a"
                     className={classNames(
                       item.current

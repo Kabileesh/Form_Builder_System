@@ -2,7 +2,7 @@ const RadioField = (props) => {
   return (
     <div className="space-y-3">
       {props.field.options.map((option, index) => (
-        <div>
+        <div key={index}>
           <input
             id={index}
             type="radio"

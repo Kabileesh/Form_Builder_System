@@ -6,6 +6,7 @@ import Login from "./User/pages/Login";
 import Home from "./User/pages/Home";
 import ToggleBar from "./Form/components/ToggleBar";
 import Forms from "./Form/pages/Forms";
+import EntryForm from "./Submission/pages/EntryForm";
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
           <Route path="/login" Component={Login} />
           <Route path="/home" Component={Home} />
           <Route path="/new-form" Component={ToggleBar} />
-          <Route path="/view-forms" Component={Forms}/>
+          <Route path="/view-forms" Component={Forms} />
+          <Route path="/form/:formId" Component={EntryForm} />
         </Routes>
       </Router>
     </div>

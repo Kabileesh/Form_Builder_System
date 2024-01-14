@@ -6,7 +6,7 @@ const getFormController = asyncErrorHandler(async (req, res) => {
   const { formId } = req.query;
   const id = req.user.id;
   const { form, formData } = await getFormService(formId, id);
-  res.stauts(FETCH_SUCCESS.status).send(form, formData);
+  res.status(FETCH_SUCCESS.status).send({form, formData, message: FETCH_SUCCESS.message});
 });
 
 module.exports = getFormController;

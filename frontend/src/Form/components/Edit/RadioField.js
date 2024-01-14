@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useDispatch, useSelector } from "react-redux";
 import {
   getFormFieldsState,
@@ -60,7 +61,7 @@ const RadioField = (props) => {
     <div>
       {options.map((option, index) => {
         return (
-          <div className="flex items-center space-x-4 mb-4">
+          <div className="flex items-center space-x-4 mb-4" key={index}>
             <button onClick={() => removeOptionHandler(index)}>
               <svg
                 className="w-[17px] h-[17px] text-red-600"
@@ -83,7 +84,7 @@ const RadioField = (props) => {
               type="radio"
               value={option}
               name="default-radio"
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
             />
             <label
               htmlFor={index}

@@ -9,7 +9,7 @@ const getFormService = async (formId, id) => {
     const filledForm = await checkSubmission(formId, id);
     let formData;
     if (!filledForm) {
-      formData = {};
+      formData = [];
     } else {
       formData = filledForm.formData;
     }

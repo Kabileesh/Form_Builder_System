@@ -2,7 +2,7 @@ const CheckBox = (props) => {
   return (
     <div>
       {props.field.options.map((option, index) => (
-        <div>
+        <div key={index}>
           <input
             id={index}
             type="checkbox"
@@ -11,7 +11,7 @@ const CheckBox = (props) => {
           />
           <label
             htmlFor={index}
-            class="ml-2 text-sm font-medium text-gray-900"
+            className="ml-2 text-sm font-medium text-gray-900"
           >
             {option}
           </label>

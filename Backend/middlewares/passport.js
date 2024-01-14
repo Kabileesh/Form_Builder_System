@@ -13,7 +13,7 @@ const credentials = async (passport) => {
       { usernameField: "username", passwordField: "password", session: false },
       async (username, password, done) => {
         const user = await userFind(username);
-        if (JSON.stringify(user) === '{}') {
+        if (JSON.stringify(user) === "{}") {
           throw new CustomError(UNAUTHORIZED.message, UNAUTHORIZED.status);
         }
         const passwordMatch = await bcrypt.compare(password, user.hash);
@@ -30,17 +30,15 @@ const credentials = async (passport) => {
     new BearerStrategy(async (token, done) => {
       try {
         const decoded = jwt.verify(token, process.env.SECRET);
-        // const existingUser = userFindById(decoded.id);
-        if (
-          decoded.exp &&
-          new Date().getTime() < decoded.exp * 1000
-        ) {
+        if (decoded.exp && new Date().getTime() < decoded.exp * 1000) {
           const user = { id: decoded.id, username: decoded.username };
           return done(null, user);
         } else {
+          req.logout();
           throw new CustomError(UNAUTHORIZED.message, UNAUTHORIZED.status);
         }
       } catch (err) {
+        req.logout();
         throw new CustomError(UNAUTHORIZED.message, UNAUTHORIZED.status);
       }
     })

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { getUserState, userLogin } from "../../store/slices/userSlice";
@@ -33,10 +33,11 @@ const Login = () => {
     console.log(username, id);
   };
 
-  if (status === SUCCEEDED && username && id) {
-    navigate("/home");
-    return;
-  }
+  useEffect(() => {
+    if (status === SUCCEEDED && username && id) {
+      navigate("/home");
+    }
+  }, [status, username, id, navigate]);
 
   return (
     <>
@@ -75,7 +76,7 @@ const Login = () => {
                   onChange={usernameHandler}
                   value={userName}
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -98,7 +99,7 @@ const Login = () => {
                   onChange={passwordHandler}
                   value={password}
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>

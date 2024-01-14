@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,7 +15,7 @@ const CheckBox = (props) => {
     const QuesField = formFields.filter((field) => field.id === props.id);
     if (QuesField[0].type === "radio" || QuesField[0].type === "checkbox")
       setOptions(QuesField[0].options);
-  }, [])
+  }, []);
 
   const addOptionHandler = () => {
     const updatedFormFields = formFields.map((field) =>
@@ -60,7 +61,7 @@ const CheckBox = (props) => {
     <>
       {options.map((option, index) => {
         return (
-          <div class="flex items-center space-x-4 mb-4">
+          <div className="flex items-center space-x-4 mb-4" key={index}>
             <button onClick={() => removeOptionHandler(index)}>
               <svg
                 className="w-[17px] h-[17px] text-red-600"
@@ -86,7 +87,7 @@ const CheckBox = (props) => {
             />
             <label
               htmlFor="default-checkbox"
-              class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
             >
               <input
                 type="text"

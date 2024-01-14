@@ -18,6 +18,7 @@ module.exports = {
 
   FETCH_SUCCESS: {
     status: 200,
+    message: "Fetched successfully",
   },
 
   REGISTER_SUCCESS: {

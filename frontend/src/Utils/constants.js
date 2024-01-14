@@ -36,6 +36,7 @@ export const toastConfig = {
 
 export const FETCH_SUCCESS = {
   status: 200,
+  message: "Fetched successfully",
 };
 
 export const LOGIN_SUCCESS = {

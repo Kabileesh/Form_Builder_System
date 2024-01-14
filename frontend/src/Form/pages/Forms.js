@@ -30,11 +30,11 @@ const Forms = () => {
     <>
       <Header />
       {isLoading ? (
-        <div class="text-center">
+        <div className="text-center">
           <div role="status">
             <svg
               aria-hidden="true"
-              class="inline w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+              className="inline w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
               viewBox="0 0 100 101"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +48,7 @@ const Forms = () => {
                 fill="currentFill"
               />
             </svg>
-            <span class="sr-only">Loading...</span>
+            <span className="sr-only">Loading...</span>
           </div>
         </div>
       ) : forms.length === 0 ? (
@@ -56,33 +56,38 @@ const Forms = () => {
           <p> No forms Yet...</p>
         </div>
       ) : (
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg my-7 mx-8">
-          <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg my-7 mx-8">
+          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" className="px-6 py-3">
                   Form Title
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" className="px-6 py-3">
                   Created At
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" className="px-6 py-3">
                   Responses
                 </th>
               </tr>
             </thead>
             <tbody>
-              {forms.map((form) => {
+              {forms.map((form, index) => {
                 return (
-                  <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                  <tr
+                    className="bg-white border-b dark:bg-gray-900 dark:border-gray-700"
+                    key={index}
+                  >
                     <th
                       scope="row"
-                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
                       {form.title}
                     </th>
-                    <td class="px-6 py-4">{form.createdAt.split("T")[0]}</td>
-                    <td class="px-6 py-4">
+                    <td className="px-6 py-4">
+                      {form.createdAt.split("T")[0]}
+                    </td>
+                    <td className="px-6 py-4">
                       <Link to={"/view-responses"}>View Responses</Link>
                     </td>
                   </tr>

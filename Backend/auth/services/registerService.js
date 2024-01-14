@@ -20,10 +20,7 @@ const registerService = async (
     const newUser = await createUser(username, name, hash);
     passport.authenticate(
       "local",
-      { session: false },
-      (req,
-      res,
-      async (err) => {
+      { session: false })(req, res, async (err) => {
         if (err) {
           throw new CustomError(UNAUTHORIZED.message, UNAUTHORIZED.status);
         }
@@ -40,7 +37,6 @@ const registerService = async (
         };
         callback(null, result);
       })
-    );
   }
 };
 

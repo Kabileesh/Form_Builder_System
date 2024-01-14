@@ -11,7 +11,10 @@ const FormField = () => {
     <>
       {formFields.length !== 0
         ? formFields.map((field, index) => (
-            <div className="box-border h-auto w-auto p-6 bg-stone-50 rounded-3xl my-7">
+            <div
+              className="box-border h-auto w-auto p-6 bg-stone-50 rounded-3xl my-7"
+              key={index}
+            >
               <p className="mb-3">{field.question}</p>
               <div className="container mx-auto px-4">
                 {field.type === "text" ? (
