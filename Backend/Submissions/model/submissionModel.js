@@ -6,7 +6,7 @@ const submissionSchema = new mongoose.Schema({
     required: true,
     ref: "Form",
   },
-  FormData: {
+  formData: {
     type: mongoose.Schema.Types.Mixed,
     required: true,
   },

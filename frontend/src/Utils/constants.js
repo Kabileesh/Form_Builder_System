@@ -30,6 +30,7 @@ export const toastConfig = {
   position: toast.POSITION.BOTTOM_RIGHT,
   autoClose: 1500,
   theme: "dark",
+  className: "text-xs",
 };
 
 // 2XX
@@ -52,6 +53,11 @@ export const REGISTER_SUCCESS = {
 export const FORM_CREATE_SUCCESS = {
   status: 201,
   message: "Form created successfully",
+};
+
+export const RESPONSE_SUBMIT_SUCCESS = {
+  status: 201,
+  message: "Response Submitted successfully",
 };
 
 export const NO_CONTENT = {

@@ -5,10 +5,13 @@ const submissionDetailsValidator = Joi.object().keys({
     "string.empty": `Form id cannot be empty`,
     "any.required": `Form id is required`,
   }),
-  formData: Joi.object().required().messages({
-    "object.empty": `Form cannot be empty`,
-    "any.required": `Form data is required`,
-  }),
+  formData: Joi.array().items(
+    Joi.object({
+      id: Joi.number().integer().min(0).required(),
+      question: Joi.string().required(),
+      answer: Joi.string().required(),
+    })
+  ),
 });
 
 module.exports = submissionDetailsValidator;

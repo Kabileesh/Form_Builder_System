@@ -7,8 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getForm,
   getFormState,
+  setFieldValues,
   setFormDetails,
+  submitResponse,
 } from "../../store/slices/submissionSlice";
+import CheckBoxInput from "../components/CheckBoxInput";
 
 const EntryForm = () => {
   const formDetails = useSelector(getFormState);
@@ -16,6 +19,7 @@ const EntryForm = () => {
   const title = formDetails.title;
   const description = formDetails.description;
   const formFields = formDetails.formFields;
+  const fieldValues = formDetails.fieldValues;
 
   const dispatch = useDispatch();
 
@@ -28,9 +32,52 @@ const EntryForm = () => {
     };
     getFormDetails();
   }, []);
+
+  const HandleInputChange = async (fieldDetails) => {
+    const existingAnswer = fieldValues.findIndex(
+      (field) => field.id === fieldDetails.id
+    );
+
+    if (existingAnswer !== -1) {
+      if (fieldDetails.answer === "") {
+        const updatedFieldValues = [...fieldValues];
+        updatedFieldValues.splice(existingAnswer, 1);
+        const sortedFieldValue = updatedFieldValues.sort((a, b) => a.id - b.id);
+        await dispatch(setFieldValues(sortedFieldValue));
+      } else {
+        const updatedFieldValues = [...fieldValues];
+        updatedFieldValues[existingAnswer] = {
+          ...updatedFieldValues[existingAnswer],
+          answer: fieldDetails.answer,
+        };
+
+        const sortedFieldValue = updatedFieldValues.sort((a, b) => a.id - b.id);
+        await dispatch(setFieldValues(sortedFieldValue));
+      }
+    } else {
+      const newFieldValue = {
+        id: fieldDetails.id,
+        question: fieldDetails.question,
+        answer: fieldDetails.answer,
+      };
+      const updatedFieldValues = [...fieldValues, newFieldValue];
+
+      const sortedFieldValue = updatedFieldValues.sort((a, b) => a.id - b.id);
+      await dispatch(setFieldValues(sortedFieldValue));
+    }
+  };
+
+  const SubmitHandler = async () => {
+    const submissionDetails = {
+      formId: formId,
+      fieldValues: fieldValues,
+    };
+    await dispatch(submitResponse(submissionDetails));
+  };
+
   return (
     <>
-      <div className="h-screen flex flex-col justify-center items-center shadow-sm bg-green-100">
+      <div className="h-screen flex flex-col justify-center gap-8 items-center shadow-sm bg-green-100">
         <div className="mt-10 sm:mx-auto sm:w-3/4 lg:w-3/4">
           <div className="space-y-6 mx-auto w-90">
             <div className="relative z-0 ml-auto">
@@ -56,15 +103,39 @@ const EntryForm = () => {
                       ) : null}
                     </p>
                     {(field.type === "text" || field.type === "email") && (
-                      <TextInput field={field} />
+                      <TextInput
+                        id={index}
+                        field={field}
+                        onInputChange={HandleInputChange}
+                      />
                     )}
-                    {field.type === "radio" && <RadioInput field={field} />}
+                    {field.type === "radio" && (
+                      <RadioInput
+                        id={index}
+                        field={field}
+                        onInputChange={HandleInputChange}
+                      />
+                    )}
+                    {field.type === "checkbox" && (
+                      <CheckBoxInput
+                        id={index}
+                        field={field}
+                        onInputChange={HandleInputChange}
+                      />
+                    )}
                   </div>
                 );
               })}
             </div>
           </div>
         </div>
+        <button
+          type="button"
+          className="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-1 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-8 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+          onClick={SubmitHandler}
+        >
+          Submit
+        </button>
       </div>
     </>
   );

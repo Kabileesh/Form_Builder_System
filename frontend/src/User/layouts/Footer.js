@@ -3,19 +3,19 @@ const Footer = () => {
     <footer className="bg-white dark:bg-gray-900">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-4 lg:py-4">
         <div className="sm:flex mt-4 lg:mt-0 md:mt-0 sm:mt-0 justify-between">
-          <div className="mb-6 md:mb-0 flex items-center sm:mb-4">
+          <div className="mb-6 md:mb-0 ml-8 flex items-center sm:mb-4">
             <img src="images/formLabLogo.png" className="h-8 me-3" alt="" />
             <span className="text-2xl font-semibold whitespace-nowrap dark:text-white">
               Form Labs
             </span>
           </div>
-          <div className="sm:text-right sm:mt-4 mb-2">
+          <div className="sm:text-right sm:mt-4 ml-8 mb-2 mr-12">
             <h2 className="mb-4 text-sm font-semibold text-gray-900 uppercase dark:text-white">
               Contact Us
             </h2>
             <ul className="text-gray-500 dark:text-gray-400 font-medium">
               <li className="mb-2">formlabs@gmail.com</li>
-              <li>9876543210</li>
+              <li>+91 9876543210</li>
             </ul>
           </div>
         </div>

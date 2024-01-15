@@ -1,4 +1,14 @@
 const RadioInput = (props) => {
+  const RadioInputHandler = async (event) => {
+    const fieldDetails = {
+      id: props.id,
+      question: props.field.question,
+      answer: event.target.value,
+    };
+
+    props.onInputChange(fieldDetails);
+  };
+
   return (
     <>
       <div className="space-y-3">
@@ -11,11 +21,9 @@ const RadioInput = (props) => {
                   value={option}
                   name="default-radio"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
+                  onChange={RadioInputHandler}
                 />
-                <label
-                  htmlFor={index}
-                  className="ml-2 text-sm font-medium text-black-900"
-                >
+                <label className="ml-2 text-sm font-medium text-black-900">
                   {option}
                 </label>
               </div>

@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import copy from "clipboard-copy";
 import axios from "../../axios/axiosConfig";
-import { FETCH_SUCCESS } from "../../Utils/constants";
+import { FETCH_SUCCESS, toastConfig } from "../../Utils/constants";
 import Header from "../../User/layouts/Header";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Forms = () => {
   const [isLoading, setLoading] = useState(false);
@@ -25,6 +28,11 @@ const Forms = () => {
     };
     getAllForms();
   }, []);
+
+  const HandleCopyClick = (_id) => {
+    copy(`http://localhost:3000/form/${_id}`);
+    toast.success("Link Copied", toastConfig);
+  };
 
   return (
     <>
@@ -69,6 +77,7 @@ const Forms = () => {
                 <th scope="col" className="px-6 py-3">
                   Responses
                 </th>
+                <th scope="col" className="px-6 py-3"></th>
               </tr>
             </thead>
             <tbody>
@@ -90,6 +99,25 @@ const Forms = () => {
                     <td className="px-6 py-4">
                       <Link to={"/view-responses"}>View Responses</Link>
                     </td>
+                    <td className="px-6 py-4">
+                      <button onClick={() => HandleCopyClick(form._id)}>
+                        <svg
+                          className="w-6 h-6 text-gray-800 dark:text-white"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 18 20"
+                        >
+                          <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M12 2h4a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h4m6 0a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1m6 0v3H6V2M5 5h8m-8 5h8m-8 4h8"
+                          />
+                        </svg>
+                      </button>
+                    </td>
                   </tr>
                 );
               })}
@@ -97,6 +125,7 @@ const Forms = () => {
           </table>
         </div>
       )}
+      <ToastContainer />
     </>
   );
 };
