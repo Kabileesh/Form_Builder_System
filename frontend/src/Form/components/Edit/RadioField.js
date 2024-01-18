@@ -5,6 +5,8 @@ import {
   updateFormField,
 } from "../../../store/slices/formSlice";
 import { useEffect, useState } from "react";
+import RemoveOptionIcon from "../../../Icons/RemoveOptionIcon";
+import AddOptionIcon from "../../../Icons/AddOptionIcon";
 
 const RadioField = (props) => {
   const dispatch = useDispatch();
@@ -63,21 +65,7 @@ const RadioField = (props) => {
         return (
           <div className="flex items-center space-x-4 mb-4" key={index}>
             <button onClick={() => removeOptionHandler(index)}>
-              <svg
-                className="w-[17px] h-[17px] text-red-600"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1.8"
-                  d="m13 7-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                />
-              </svg>
+              <RemoveOptionIcon />
             </button>
             <input
               id={index}
@@ -103,23 +91,7 @@ const RadioField = (props) => {
         );
       })}
       <button onClick={addOptionHandler}>
-        <svg
-          className="w-5 h-5 text-green-700"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          fill="none"
-          viewBox="0 0 20 20"
-        >
-          <path
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M10 5.757v8.486M5.757 10h8.486M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-          />
-        </svg>
+        <AddOptionIcon />
       </button>
     </div>
   );

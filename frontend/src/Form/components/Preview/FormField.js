@@ -15,7 +15,14 @@ const FormField = () => {
               className="box-border h-auto w-auto p-6 bg-stone-50 rounded-3xl my-7"
               key={index}
             >
-              <p className="mb-3">{field.question}</p>
+              <p className="mb-3">
+                {field.question}
+                {field.required ? (
+                  <span className="text-red-500 m-2">*</span>
+                ) : (
+                  <span className="text-white">*</span>
+                )}
+              </p>
               <div className="container mx-auto px-4">
                 {field.type === "text" ? (
                   <TextField field={field} />

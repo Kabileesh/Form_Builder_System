@@ -9,7 +9,7 @@ const TextField = (props) => {
             name="text"
             type="text"
             autoComplete="text"
-            required={props.required ? true : false}
+            disabled
           />
         </div>
       </div>

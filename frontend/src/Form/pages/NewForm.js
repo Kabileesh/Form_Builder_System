@@ -84,7 +84,13 @@ const NewForm = () => {
               {formFields.length !== 0
                 ? formFields.map((field, index) => {
                     return (
-                      <Question id={field.id} key={index} type={field.type} />
+                      <Question
+                        id={field.id}
+                        key={index}
+                        type={field.type}
+                        question={field.question}
+                        required={field.required}
+                      />
                     );
                   })
                 : ""}

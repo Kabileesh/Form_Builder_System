@@ -9,7 +9,10 @@ const submissionDetailsValidator = Joi.object().keys({
     Joi.object({
       id: Joi.number().integer().min(0).required(),
       question: Joi.string().required(),
-      answer: Joi.string().required(),
+      answer: Joi.alternatives().try(
+        Joi.string().required(),
+        Joi.array().items(Joi.string()).required()
+      ),
     })
   ),
 });

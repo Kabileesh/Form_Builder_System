@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import TextInput from "../components/TextInput";
 import RadioInput from "../components/RadioInput";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +15,8 @@ import CheckBoxInput from "../components/CheckBoxInput";
 
 const EntryForm = () => {
   const formDetails = useSelector(getFormState);
+
+  const navigate = useNavigate();
 
   const title = formDetails.title;
   const description = formDetails.description;
@@ -73,11 +75,12 @@ const EntryForm = () => {
       fieldValues: fieldValues,
     };
     await dispatch(submitResponse(submissionDetails));
+    navigate("/success");
   };
 
   return (
     <>
-      <div className="h-screen flex flex-col justify-center gap-8 items-center shadow-sm bg-green-100">
+      <div className="h-full flex flex-col justify-center gap-8 items-center shadow-sm bg-green-100">
         <div className="mt-10 sm:mx-auto sm:w-3/4 lg:w-3/4">
           <div className="space-y-6 mx-auto w-90">
             <div className="relative z-0 ml-auto">
@@ -99,7 +102,7 @@ const EntryForm = () => {
                     <p>
                       {field.question}
                       {field.required ? (
-                        <span className="text-red-500">*</span>
+                        <span className="text-red-500 ml-2">*</span>
                       ) : null}
                     </p>
                     {(field.type === "text" || field.type === "email") && (

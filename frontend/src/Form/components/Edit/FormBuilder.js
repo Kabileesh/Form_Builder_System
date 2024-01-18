@@ -7,6 +7,9 @@ import { useRef } from "react";
 import axios from "../../../axios/axiosConfig";
 import { FORM_CREATE_SUCCESS } from "../../../Utils/constants";
 import { useNavigate } from "react-router-dom";
+import AddRadioFieldIcon from "../../../Icons/AddRadioFieldIcon";
+import AddCheckBoxIcon from "../../../Icons/AddCheckBoxIcon";
+import AddTextFieldIcon from "../../../Icons/AddTextFieldIcon";
 
 const FormBuilder = () => {
   const idRef = useRef(1);
@@ -85,65 +88,13 @@ const FormBuilder = () => {
         className="hover:bg-white mr-10"
         onClick={() => handleAddField("text")}
       >
-        <svg
-          className="w-[17px] h-[17px] text-gray-800"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 14 14"
-        >
-          <path
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="1.8"
-            d="M3 1h8M1 5h12M3 9h8M1 13h12"
-          />
-        </svg>
+        <AddTextFieldIcon />
       </button>
       <button className=" mr-10" onClick={() => handleAddField("radio")}>
-        <svg
-          className="w-7 h-7 text-grey-500"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle
-            className="text-grey-500"
-            cx="12"
-            cy="12"
-            r="9"
-            fill="currentColor"
-          ></circle>
-          <circle
-            className="text-white"
-            cx="12"
-            cy="12"
-            r="4"
-            fill="currentColor"
-          ></circle>
-        </svg>
+        <AddRadioFieldIcon />
       </button>
       <button className=" mr-10" onClick={() => handleAddField("checkbox")}>
-        <svg
-          className="w-7 h-7 text-grey-500"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <rect
-            x="3"
-            y="3"
-            width="18"
-            height="18"
-            rx="2"
-            className="text-grey-500"
-            fill="currentColor"
-          ></rect>
-          <path d="M9 12l2 2 4-4" className="text-white"></path>
-        </svg>
+        <AddCheckBoxIcon />
       </button>
       <button
         type="button"
