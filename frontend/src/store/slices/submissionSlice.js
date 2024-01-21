@@ -52,6 +52,27 @@ export const submitResponse = createAsyncThunk(
   }
 );
 
+export const getResponses = createAsyncThunk(
+  "submission/getResponses",
+  async (formId) => {
+    try {
+      const response = await axios.get("/view-responses", {
+        params: { formId },
+      });
+      if (
+        response?.status === FETCH_SUCCESS.status &&
+        response.data?.message === FETCH_SUCCESS.message
+      ) {
+        return response?.data.formResponses;
+      }
+    } catch (err) {
+      const error = err;
+      error.message = err.response.data?.message;
+      throw error;
+    }
+  }
+);
+
 const submissionSlice = createSlice({
   name: "submission",
   initialState: initialState,

@@ -1,40 +1,27 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import copy from "clipboard-copy";
-import axios from "../../axios/axiosConfig";
-import { FETCH_SUCCESS, toastConfig } from "../../Utils/constants";
 import Header from "../../User/layouts/Header";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import LoadingIcon from "../../Icons/LoadingIcon";
-import ClipBoardIcon from "../../Icons/ClipBoardIcon";
+import { getResponses } from "../../store/slices/submissionSlice";
+import { Link, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-const Forms = () => {
-  const [isLoading, setLoading] = useState(false);
-  const [forms, setForms] = useState([]);
+const ResponseList = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [responses, setResponses] = useState([]);
+
+  const dispatch = useDispatch();
+
+  const { formId } = useParams();
 
   useEffect(() => {
-    const getAllForms = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get("/view-forms", { params: {} });
-        if (response.status === FETCH_SUCCESS.status) {
-          setForms(response?.data);
-          setLoading(false);
-        }
-      } catch (err) {
-        const error = err;
-        error.message = err.response.data?.message;
-        throw error;
-      }
+    const fetchData = async () => {
+      setIsLoading(true);
+      const response = await dispatch(getResponses(formId));
+      setResponses(response.payload);
+      setIsLoading(false);
     };
-    getAllForms();
-  }, []);
-
-  const HandleCopyClick = (_id) => {
-    copy(`http://localhost:3000/form/${_id}`);
-    toast.success("Link Copied", toastConfig);
-  };
+    fetchData();
+  }, [dispatch, formId]);
 
   return (
     <>
@@ -43,9 +30,9 @@ const Forms = () => {
         <div className="text-center">
           <LoadingIcon />
         </div>
-      ) : forms.length === 0 ? (
+      ) : responses.length === 0 ? (
         <div>
-          <p> No forms Yet...</p>
+          <p> No Responses Yet...</p>
         </div>
       ) : (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg my-7 mx-8">
@@ -53,19 +40,18 @@ const Forms = () => {
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" className="px-6 py-3">
-                  Form Title
+                  Email
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Created At
+                  Submitted At
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Responses
                 </th>
-                <th scope="col" className="px-6 py-3"></th>
               </tr>
             </thead>
             <tbody>
-              {forms.map((form, index) => {
+              {responses.map((response, index) => {
                 return (
                   <tr
                     className="bg-white border-b dark:bg-gray-900 dark:border-gray-700"
@@ -75,23 +61,20 @@ const Forms = () => {
                       scope="row"
                       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
-                      {form.title}
+                      {response.formData[0].answer}
                     </th>
                     <td className="px-6 py-4">
-                      {form.createdAt.split("T")[0]}
+                      {response.submittedAt.split("T")[0]}&nbsp;&nbsp;&nbsp;
+                      {response.submittedAt.split("T")[1].split(".")[0]}
                     </td>
                     <td className="px-6 py-4">
                       <Link
                         className="hover:underline hover:text-blue-600"
-                        to={`/view-responses/${form._id}`}
+                        to={"/response"}
+                        state={response.formData}
                       >
-                        View Responses
+                        View
                       </Link>
-                    </td>
-                    <td className="px-6 py-4">
-                      <button onClick={() => HandleCopyClick(form._id)}>
-                        <ClipBoardIcon />
-                      </button>
                     </td>
                   </tr>
                 );
@@ -100,9 +83,8 @@ const Forms = () => {
           </table>
         </div>
       )}
-      <ToastContainer />
     </>
   );
 };
 
-export default Forms;
+export default ResponseList;

@@ -30,7 +30,6 @@ const Login = () => {
     };
 
     await dispatch(userLogin(user));
-    console.log(username, id);
   };
 
   useEffect(() => {
