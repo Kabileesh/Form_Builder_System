@@ -72,7 +72,7 @@ const FormBuilder = () => {
         response?.status === FORM_CREATE_SUCCESS.status &&
         response?.data.message === FORM_CREATE_SUCCESS.message
       ) {
-        navigate("/view-forms");
+        navigate("/forms/view-forms");
       }
     } catch (err) {
       const error = err;

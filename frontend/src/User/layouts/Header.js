@@ -1,11 +1,11 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const navigation = [
-  { name: "Create", href: "/new-form" },
-  { name: "Form", href: "/view-forms" },
+  { name: "Create", href: "/forms/new-form" },
+  { name: "Form", href: "/forms/view-forms" },
 ];
 
 function classNames(...classes) {
@@ -14,6 +14,12 @@ function classNames(...classes) {
 
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogOut = async () => {
+    sessionStorage.clear();
+    navigate("/");
+  };
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -35,7 +41,7 @@ const Header = () => {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <Link to={"/home"}>
+                  <Link to={"/forms"}>
                     <img
                       className="h-10 w-20 box-border rounded-2xl mr-10"
                       src="images/formLab.png"
@@ -116,14 +122,15 @@ const Header = () => {
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <p
+                          <button
                             className={classNames(
                               active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              "block w-full px-4 py-2 text-sm text-start text-gray-700"
                             )}
+                            onClick={handleLogOut}
                           >
                             Sign out
-                          </p>
+                          </button>
                         )}
                       </Menu.Item>
                     </Menu.Items>

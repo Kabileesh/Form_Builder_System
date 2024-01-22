@@ -83,7 +83,7 @@ const Forms = () => {
                     <td className="px-6 py-4">
                       <Link
                         className="hover:underline hover:text-blue-600"
-                        to={`/view-responses/${form._id}`}
+                        to={`/forms/view-responses/${form._id}`}
                       >
                         View Responses
                       </Link>

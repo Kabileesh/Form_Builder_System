@@ -44,7 +44,7 @@ const prodErrors = (res, error) => {
   }
 };
 
-module.exports = globalErrorHandler = (error, req, res, next) => {
+const globalErrorHandler = (error, req, res, next) => {
   error.statusCode = error.statusCode || 500;
   error.status = error.status || "error";
 
@@ -72,3 +72,5 @@ module.exports = globalErrorHandler = (error, req, res, next) => {
     prodErrors(res, error);
   }
 };
+
+module.exports = globalErrorHandler;

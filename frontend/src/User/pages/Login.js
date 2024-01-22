@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { getUserState, userLogin } from "../../store/slices/userSlice";
-import { SUCCEEDED } from "../../Utils/constants";
 
 const Login = () => {
   const [userName, setUsername] = useState("");
@@ -11,7 +10,7 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { username, id, error, status } = useSelector(getUserState);
+  const { error } = useSelector(getUserState);
 
   const usernameHandler = (event) => {
     setUsername(event.target.value);
@@ -29,14 +28,15 @@ const Login = () => {
       password: password,
     };
 
-    await dispatch(userLogin(user));
+    const response = await dispatch(userLogin(user));
+
+    if (response.payload) {
+      navigate("/forms");
+    }
   };
 
-  useEffect(() => {
-    if (status === SUCCEEDED && username && id) {
-      navigate("/home");
-    }
-  }, [status, username, id, navigate]);
+  if (window.sessionStorage.getItem("accessToken"))
+    return <Navigate to="/forms" />;
 
   return (
     <>

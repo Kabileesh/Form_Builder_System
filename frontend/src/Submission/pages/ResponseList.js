@@ -70,7 +70,7 @@ const ResponseList = () => {
                     <td className="px-6 py-4">
                       <Link
                         className="hover:underline hover:text-blue-600"
-                        to={"/response"}
+                        to={"/forms/response"}
                         state={response.formData}
                       >
                         View

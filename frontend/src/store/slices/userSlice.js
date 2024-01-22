@@ -6,6 +6,7 @@ import {
   LOGIN_SUCCESS,
   REGISTER_SUCCESS,
   SUCCEEDED,
+  SUCCEESS,
 } from "../../Utils/constants";
 
 const initialState = {
@@ -43,6 +44,24 @@ export const userRegister = createAsyncThunk(
       ) {
         sessionStorage.setItem("accessToken", response?.data.accessToken);
         return response?.data.user;
+      }
+    } catch (err) {
+      const error = err;
+      error.message = err.response.data?.message;
+      throw error;
+    }
+  }
+);
+
+export const verifyToken = createAsyncThunk(
+  "user/verifyToken",
+  async (accessToken) => {
+    try {
+      const response = await axios.post("/verify-token", {
+        token: accessToken,
+      });
+      if (response?.status === SUCCEESS.status) {
+        return response;
       }
     } catch (err) {
       const error = err;

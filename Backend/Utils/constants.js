@@ -21,6 +21,10 @@ module.exports = {
     message: "Fetched successfully",
   },
 
+  SUCCEEDED: {
+    status: 200,
+  },
+
   REGISTER_SUCCESS: {
     status: 201,
     message: "Registered successfully",
@@ -46,6 +50,11 @@ module.exports = {
   EMAIL_ALREADY_EXIST: {
     status: 400,
     message: "Email is already taken",
+  },
+
+  INVALID_ID_VALUE: {
+    status: 400,
+    message: "Invalid id",
   },
 
   INVALID_FORM_ID: {

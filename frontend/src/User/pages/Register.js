@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useRef, useState } from "react";
 import { getUserState, userRegister } from "../../store/slices/userSlice";
@@ -15,11 +15,7 @@ const Register = () => {
 
   const [error, setError] = useState("");
 
-  const {
-    id: userId,
-    error: errMsg,
-    status,
-  } = useSelector(getUserState);
+  const { id, error: errMsg, status } = useSelector(getUserState);
 
   const nameRef = useRef();
   const usernameRef = useRef();
@@ -55,14 +51,15 @@ const Register = () => {
       password: password,
     };
 
-    dispatch(userRegister(user));
-    console.log(status, username, userId);
+    await dispatch(userRegister(user));
+
+    if (status === SUCCEEDED && id) {
+      navigate("/forms");
+    }
   };
 
-  if (status === SUCCEEDED) {
-    navigate("/home");
-    return;
-  }
+  if (window.sessionStorage.getItem("accessToken"))
+    return <Navigate to="/forms" />;
 
   return (
     <>

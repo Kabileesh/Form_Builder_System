@@ -3,7 +3,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
 const { Strategy: BearerStrategy } = require("passport-http-bearer");
 const jwt = require("jsonwebtoken");
-const { UNAUTHORIZED } = require("../Utils/constants");
+const { UNAUTHORIZED, FORBIDDEN } = require("../Utils/constants");
 const userFind = require("../auth/db/userFind");
 const CustomError = require("../Utils/customError");
 
@@ -14,13 +14,17 @@ const credentials = async (passport) => {
       async (username, password, done) => {
         const user = await userFind(username);
         if (JSON.stringify(user) === "{}") {
-          throw new CustomError(UNAUTHORIZED.message, UNAUTHORIZED.status);
+          return done(
+            new CustomError(UNAUTHORIZED.message, UNAUTHORIZED.status)
+          );
         }
         const passwordMatch = await bcrypt.compare(password, user.hash);
         if (passwordMatch) {
           return done(null, { id: user.id, username: user.username });
         } else {
-          throw new CustomError(UNAUTHORIZED.message, UNAUTHORIZED.status);
+          return done(
+            new CustomError(UNAUTHORIZED.message, UNAUTHORIZED.status)
+          );
         }
       }
     )
@@ -34,12 +38,10 @@ const credentials = async (passport) => {
           const user = { id: decoded.id, username: decoded.username };
           return done(null, user);
         } else {
-          req.logout();
-          throw new CustomError(UNAUTHORIZED.message, UNAUTHORIZED.status);
+          return done(new CustomError(FORBIDDEN.message, FORBIDDEN.status));
         }
       } catch (err) {
-        req.logout();
-        throw new CustomError(UNAUTHORIZED.message, UNAUTHORIZED.status);
+        return done(new CustomError(UNAUTHORIZED.message, UNAUTHORIZED.status));
       }
     })
   );

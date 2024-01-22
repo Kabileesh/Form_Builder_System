@@ -75,7 +75,7 @@ const EntryForm = () => {
       fieldValues: fieldValues,
     };
     await dispatch(submitResponse(submissionDetails));
-    navigate("/success");
+    navigate("/forms/success");
   };
 
   return (

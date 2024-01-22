@@ -14,7 +14,7 @@ const SubmittedPage = () => {
         </p>
         <div className="mt-24">
           <Link
-            to={"/new-form"}
+            to={"/forms/new-form"}
             className="font-medium text-blue-600 underline"
           >
             Create your own form

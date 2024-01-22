@@ -18,11 +18,15 @@ const registerService = async (
   if (globalValidator(registerValidator, { username, password })) {
     const hash = await hashPassword(password);
     const newUser = await createUser(username, name, hash);
-    passport.authenticate(
-      "local",
-      { session: false })(req, res, async (err) => {
+    passport.authenticate("local", { session: false })(
+      req,
+      res,
+      async (err) => {
         if (err) {
-          throw new CustomError(UNAUTHORIZED.message, UNAUTHORIZED.status);
+          callback(
+            new CustomError(UNAUTHORIZED.message, UNAUTHORIZED.status),
+            null
+          );
         }
         const username = req.user.username;
         const id = req.user.id;
@@ -36,7 +40,8 @@ const registerService = async (
           accessToken: accessToken,
         };
         callback(null, result);
-      })
+      }
+    );
   }
 };
 
