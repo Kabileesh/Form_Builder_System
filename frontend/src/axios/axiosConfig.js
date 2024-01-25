@@ -17,6 +17,9 @@ axios.interceptors.request.use(function (config) {
 axios.interceptors.response.use(
   (res) => res,
   async (err) => {
+    if (err.response.status === 404) {
+      window.location.href = "/error";
+    }
     if (
       err.response.status === 401 ||
       err.response.status === 403 ||

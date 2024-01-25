@@ -1,11 +1,11 @@
 import React from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import LandingHeader from "../layouts/LandingHeader";
 import Footer from "../layouts/Footer";
+import { CheckAuth } from "../../Utils/commonFunctions";
 
 const Landing = () => {
-  if (window.sessionStorage.getItem("accessToken"))
-    return <Navigate to="/forms" />;
+  CheckAuth();
 
   return (
     <div className="bg-white">

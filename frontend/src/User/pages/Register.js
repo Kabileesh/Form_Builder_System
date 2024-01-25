@@ -1,4 +1,4 @@
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useRef, useState } from "react";
 import { getUserState, userRegister } from "../../store/slices/userSlice";
@@ -8,6 +8,7 @@ import {
   PASSWORD_REGEX,
   SUCCEEDED,
 } from "../../Utils/constants";
+import { CheckAuth } from "../../Utils/commonFunctions";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -58,8 +59,7 @@ const Register = () => {
     }
   };
 
-  if (window.sessionStorage.getItem("accessToken"))
-    return <Navigate to="/forms" />;
+  CheckAuth();
 
   return (
     <>

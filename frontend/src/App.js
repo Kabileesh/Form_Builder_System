@@ -12,6 +12,7 @@ import ResponseList from "./Submission/pages/ResponseList";
 import Response from "./Submission/pages/Response";
 import PrivateRoute from "./Routes/PrivateRoute";
 import RouteSetup from "./Routes/RouteSetup";
+import NotFound from "./Utils/NotFound";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             <Route path="view-responses/:formId" element={<ResponseList />} />
             <Route path="response" element={<Response />} />
           </Route>
+          <Route path="/error" element={<NotFound />} />
         </Routes>
       </Router>
     </div>

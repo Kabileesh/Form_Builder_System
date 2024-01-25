@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getUserState, userLogin } from "../../store/slices/userSlice";
+import { CheckAuth } from "../../Utils/commonFunctions";
 
 const Login = () => {
   const [userName, setUsername] = useState("");
@@ -35,8 +36,7 @@ const Login = () => {
     }
   };
 
-  if (window.sessionStorage.getItem("accessToken"))
-    return <Navigate to="/forms" />;
+  CheckAuth();
 
   return (
     <>

@@ -1,11 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
   addFormField,
+  createForm,
   getFormFieldsState,
 } from "../../../store/slices/formSlice";
 import { useRef } from "react";
-import axios from "../../../axios/axiosConfig";
-import { FORM_CREATE_SUCCESS } from "../../../Utils/constants";
 import { useNavigate } from "react-router-dom";
 import AddRadioFieldIcon from "../../../Icons/AddRadioFieldIcon";
 import AddCheckBoxIcon from "../../../Icons/AddCheckBoxIcon";
@@ -66,18 +65,10 @@ const FormBuilder = () => {
       ...getFormDetails,
       formFields: updatedFormFields,
     };
-    try {
-      const response = await axios.post("/create-form", formDetails);
-      if (
-        response?.status === FORM_CREATE_SUCCESS.status &&
-        response?.data.message === FORM_CREATE_SUCCESS.message
-      ) {
-        navigate("/forms/view-forms");
-      }
-    } catch (err) {
-      const error = err;
-      error.message = err.response.data?.message;
-      throw error;
+
+    const response = await dispatch(createForm(formDetails));
+    if (response.payload) {
+      navigate("/forms/view-forms");
     }
   };
 

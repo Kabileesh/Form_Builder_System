@@ -1,38 +1,33 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import copy from "clipboard-copy";
-import axios from "../../axios/axiosConfig";
-import { FETCH_SUCCESS, toastConfig } from "../../Utils/constants";
+import { toastConfig } from "../../Utils/constants";
 import Header from "../../User/layouts/Header";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LoadingIcon from "../../Icons/LoadingIcon";
 import ClipBoardIcon from "../../Icons/ClipBoardIcon";
+import { viewForms } from "../../store/slices/formSlice";
+import { useDispatch } from "react-redux";
 
 const Forms = () => {
   const [isLoading, setLoading] = useState(false);
   const [forms, setForms] = useState([]);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const getAllForms = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get("/view-forms", { params: {} });
-        if (response.status === FETCH_SUCCESS.status) {
-          setForms(response?.data);
-          setLoading(false);
-        }
-      } catch (err) {
-        const error = err;
-        error.message = err.response.data?.message;
-        throw error;
-      }
+      setLoading(true);
+      const response = await dispatch(viewForms());
+      setForms(response?.payload);
+      setLoading(false);
     };
     getAllForms();
-  }, []);
+  }, [dispatch]);
 
   const HandleCopyClick = (_id) => {
-    copy(`http://localhost:3000/form/${_id}`);
+    copy(`http://localhost:3000/forms/form/${_id}`);
     toast.success("Link Copied", toastConfig);
   };
 
