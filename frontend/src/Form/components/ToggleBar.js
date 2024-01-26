@@ -2,8 +2,8 @@ import { useState } from "react";
 import NewForm from "../pages/NewForm";
 import FormPreview from "../pages/FormPreview";
 import Header from "../../User/layouts/Header";
-import EditIcon from "../../Icons/EditIcon";
-import PreviewIcon from "../../Icons/PreviewIcon";
+import EditIcon from "../../UI/Icons/EditIcon";
+import PreviewIcon from "../../UI/Icons/PreviewIcon";
 
 const ToggleBar = () => {
   const [isEdit, setIsEdit] = useState(true);

@@ -5,10 +5,11 @@ import { toastConfig } from "../../Utils/constants";
 import Header from "../../User/layouts/Header";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import LoadingIcon from "../../Icons/LoadingIcon";
-import ClipBoardIcon from "../../Icons/ClipBoardIcon";
+import LoadingIcon from "../../UI/Icons/LoadingIcon";
+import ClipBoardIcon from "../../UI/Icons/ClipBoardIcon";
 import { viewForms } from "../../store/slices/formSlice";
 import { useDispatch } from "react-redux";
+import BackButton from "../../UI/Components/BackButton";
 
 const Forms = () => {
   const [isLoading, setLoading] = useState(false);
@@ -34,16 +35,18 @@ const Forms = () => {
   return (
     <>
       <Header />
-      {isLoading ? (
+      {isLoading || !forms ? (
         <div className="text-center">
           <LoadingIcon />
         </div>
       ) : forms.length === 0 ? (
-        <div>
-          <p> No forms Yet...</p>
+        <div className="text-center p-20">
+          <p className="m-8"> No forms Yet...</p>
+          <BackButton />
         </div>
       ) : (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg my-7 mx-8">
+          <BackButton />
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>

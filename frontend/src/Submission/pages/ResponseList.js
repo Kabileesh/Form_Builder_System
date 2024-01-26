@@ -1,15 +1,19 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import Header from "../../User/layouts/Header";
-import LoadingIcon from "../../Icons/LoadingIcon";
-import { getResponses } from "../../store/slices/submissionSlice";
+import LoadingIcon from "../../UI/Icons/LoadingIcon";
+import { getFormState, getResponses } from "../../store/slices/submissionSlice";
 import { Link, useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import BackButton from "../../UI/Components/BackButton";
+import { ErrorHandler } from "../../Utils/ErrorHandler";
 
 const ResponseList = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [responses, setResponses] = useState([]);
 
   const dispatch = useDispatch();
+  const { error } = useSelector(getFormState);
 
   const { formId } = useParams();
 
@@ -18,6 +22,7 @@ const ResponseList = () => {
       setIsLoading(true);
       const response = await dispatch(getResponses(formId));
       setResponses(response.payload);
+      ErrorHandler(error);
       setIsLoading(false);
     };
     fetchData();
@@ -26,16 +31,18 @@ const ResponseList = () => {
   return (
     <>
       <Header />
-      {isLoading ? (
+      {isLoading || !responses ? (
         <div className="text-center">
           <LoadingIcon />
         </div>
       ) : responses.length === 0 ? (
-        <div>
-          <p> No Responses Yet...</p>
+        <div className="text-center p-20">
+          <p className="m-8"> No Responses Yet...</p>
+          <BackButton />
         </div>
       ) : (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg my-7 mx-8">
+          <BackButton />
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>

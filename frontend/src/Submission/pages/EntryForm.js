@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import TextInput from "../components/TextInput";
 import RadioInput from "../components/RadioInput";
@@ -12,9 +12,13 @@ import {
   submitResponse,
 } from "../../store/slices/submissionSlice";
 import CheckBoxInput from "../components/CheckBoxInput";
+import LoadingIcon from "../../UI/Icons/LoadingIcon";
+import { ErrorHandler } from "../../Utils/ErrorHandler";
 
 const EntryForm = () => {
   const formDetails = useSelector(getFormState);
+
+  const [isLoading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -22,6 +26,7 @@ const EntryForm = () => {
   const description = formDetails.description;
   const formFields = formDetails.formFields;
   const fieldValues = formDetails.fieldValues;
+  const error = formDetails.error;
 
   const dispatch = useDispatch();
 
@@ -29,8 +34,11 @@ const EntryForm = () => {
 
   useEffect(() => {
     const getFormDetails = async () => {
+      setLoading(true);
       const response = await dispatch(getForm(formId));
       await dispatch(setFormDetails(response?.payload.data.form));
+      ErrorHandler(error);
+      setLoading(false);
     };
     getFormDetails();
   }, []);
@@ -80,66 +88,72 @@ const EntryForm = () => {
 
   return (
     <>
-      <div className="h-full flex flex-col justify-center gap-8 items-center shadow-sm bg-green-100">
-        <div className="mt-10 sm:mx-auto sm:w-3/4 lg:w-3/4">
-          <div className="space-y-6 mx-auto w-90">
-            <div className="relative z-0 ml-auto">
+      {isLoading ? (
+        <div className="text-center">
+          <LoadingIcon />
+        </div>
+      ) : (
+        <div className="h-full flex flex-col justify-center gap-8 items-center shadow-sm bg-green-100">
+          <div className="mt-10 sm:mx-auto sm:w-3/4 lg:w-3/4">
+            <div className="space-y-6 mx-auto w-90">
               <div className="relative z-0 ml-auto">
-                <h2 className="text-xl text-gray-700 font-bold">{title}</h2>
+                <div className="relative z-0 ml-auto">
+                  <h2 className="text-xl text-gray-700 font-bold">{title}</h2>
+                </div>
+              </div>
+              <p className="text-base font-normal text-gray-700 lg:text-sm">
+                {description}
+              </p>
+              <hr className="h-0.5 my-8 bg-gray-400"></hr>
+              <div className="space-y-5">
+                {formFields.map((field, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="box-border h-auto w-auto p-6 bg-stone-50 rounded-3xl my-7 space-y-4"
+                    >
+                      <p>
+                        {field.question}
+                        {field.required ? (
+                          <span className="text-red-500 ml-2">*</span>
+                        ) : null}
+                      </p>
+                      {(field.type === "text" || field.type === "email") && (
+                        <TextInput
+                          id={index}
+                          field={field}
+                          onInputChange={HandleInputChange}
+                        />
+                      )}
+                      {field.type === "radio" && (
+                        <RadioInput
+                          id={index}
+                          field={field}
+                          onInputChange={HandleInputChange}
+                        />
+                      )}
+                      {field.type === "checkbox" && (
+                        <CheckBoxInput
+                          id={index}
+                          field={field}
+                          onInputChange={HandleInputChange}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
-            <p className="text-base font-normal text-gray-700 lg:text-sm">
-              {description}
-            </p>
-            <hr className="h-0.5 my-8 bg-gray-400"></hr>
-            <div className="space-y-5">
-              {formFields.map((field, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="box-border h-auto w-auto p-6 bg-stone-50 rounded-3xl my-7 space-y-4"
-                  >
-                    <p>
-                      {field.question}
-                      {field.required ? (
-                        <span className="text-red-500 ml-2">*</span>
-                      ) : null}
-                    </p>
-                    {(field.type === "text" || field.type === "email") && (
-                      <TextInput
-                        id={index}
-                        field={field}
-                        onInputChange={HandleInputChange}
-                      />
-                    )}
-                    {field.type === "radio" && (
-                      <RadioInput
-                        id={index}
-                        field={field}
-                        onInputChange={HandleInputChange}
-                      />
-                    )}
-                    {field.type === "checkbox" && (
-                      <CheckBoxInput
-                        id={index}
-                        field={field}
-                        onInputChange={HandleInputChange}
-                      />
-                    )}
-                  </div>
-                );
-              })}
-            </div>
           </div>
+          <button
+            type="button"
+            className="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-1 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-8 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+            onClick={SubmitHandler}
+          >
+            Submit
+          </button>
         </div>
-        <button
-          type="button"
-          className="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-1 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-8 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-          onClick={SubmitHandler}
-        >
-          Submit
-        </button>
-      </div>
+      )}
     </>
   );
 };

@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
 import { verifyToken } from "../store/slices/userSlice";
 import { IDLE, LOADING, SUCCEEDED } from "../Utils/constants";
-import LoadingIcon from "../Icons/LoadingIcon";
+import LoadingIcon from "../UI/Icons/LoadingIcon";
 
 const RouteSetup = () => {
   const [loading, setLoading] = useState(IDLE);

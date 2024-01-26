@@ -9,7 +9,7 @@ import TextField from "./TextField";
 import RadioField from "./RadioField";
 import { useEffect, useState } from "react";
 import CheckBox from "./CheckBox";
-import TrashIcon from "../../../Icons/TrashIcon";
+import TrashIcon from "../../../UI/Icons/TrashIcon";
 
 const Question = (props) => {
   const formFields = useSelector(getFormFieldsState).formFields;

@@ -18,7 +18,7 @@ axios.interceptors.response.use(
   (res) => res,
   async (err) => {
     if (err.response.status === 404) {
-      window.location.href = "/error";
+      window.location.href = "/error/not-found";
     }
     if (
       err.response.status === 401 ||

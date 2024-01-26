@@ -6,9 +6,9 @@ import {
 } from "../../../store/slices/formSlice";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import AddRadioFieldIcon from "../../../Icons/AddRadioFieldIcon";
-import AddCheckBoxIcon from "../../../Icons/AddCheckBoxIcon";
-import AddTextFieldIcon from "../../../Icons/AddTextFieldIcon";
+import AddRadioFieldIcon from "../../../UI/Icons/AddRadioFieldIcon";
+import AddCheckBoxIcon from "../../../UI/Icons/AddCheckBoxIcon";
+import AddTextFieldIcon from "../../../UI/Icons/AddTextFieldIcon";
 
 const FormBuilder = () => {
   const idRef = useRef(1);

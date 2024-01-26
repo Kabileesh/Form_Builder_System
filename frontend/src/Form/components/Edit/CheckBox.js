@@ -5,8 +5,8 @@ import {
   getFormFieldsState,
   updateFormField,
 } from "../../../store/slices/formSlice";
-import RemoveOptionIcon from "../../../Icons/RemoveOptionIcon";
-import AddOptionIcon from "../../../Icons/AddOptionIcon";
+import RemoveOptionIcon from "../../../UI/Icons/RemoveOptionIcon";
+import AddOptionIcon from "../../../UI/Icons/AddOptionIcon";
 
 const CheckBox = (props) => {
   const dispatch = useDispatch();

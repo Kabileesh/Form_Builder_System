@@ -8,6 +8,7 @@ const initialState = {
   description: null,
   formFields: [],
   fieldValues: [],
+  error: null,
 };
 
 export const getForm = createAsyncThunk(
@@ -86,6 +87,23 @@ const submissionSlice = createSlice({
     setFieldValues(state, action) {
       state.fieldValues = action.payload;
     },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(getForm.rejected, (state, action) => {
+        state.error = action.error.message;
+        state._id = null;
+        state.title = null;
+        state.description = null;
+        state.formFields = null;
+      })
+      .addCase(getResponses.rejected, (state, action) => {
+        state.error = action.error.message;
+        state._id = null;
+        state.title = null;
+        state.description = null;
+        state.formFields = null;
+      });
   },
 });
 
