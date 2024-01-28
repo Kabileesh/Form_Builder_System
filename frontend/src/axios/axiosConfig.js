@@ -26,7 +26,11 @@ axios.interceptors.response.use(
       err.response.data.err
     ) {
       sessionStorage.clear();
-      window.location.reload();
+      if (
+        window.location.pathname !== "/login" &&
+        window.location.pathname !== "/register"
+      )
+        window.location.reload();
     }
     return Promise.reject(err);
   }

@@ -10,10 +10,12 @@ import ClipBoardIcon from "../../UI/Icons/ClipBoardIcon";
 import { viewForms } from "../../store/slices/formSlice";
 import { useDispatch } from "react-redux";
 import BackButton from "../../UI/Components/BackButton";
+import { Tooltip } from "react-tooltip";
 
 const Forms = () => {
   const [isLoading, setLoading] = useState(false);
   const [forms, setForms] = useState([]);
+  const [copiedId, setCopiedId] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -28,6 +30,7 @@ const Forms = () => {
   }, [dispatch]);
 
   const HandleCopyClick = (_id) => {
+    setCopiedId(_id);
     copy(`http://localhost:3000/forms/form/${_id}`);
     toast.success("Link Copied", toastConfig);
   };
@@ -87,9 +90,21 @@ const Forms = () => {
                       </Link>
                     </td>
                     <td className="px-6 py-4">
-                      <button onClick={() => HandleCopyClick(form._id)}>
-                        <ClipBoardIcon />
+                      <button
+                        data-tooltip-id={`tooltip-${form._id}`}
+                        onClick={() => HandleCopyClick(form._id)}
+                      >
+                        <ClipBoardIcon isCopied={copiedId === form._id} />
                       </button>
+                      <Tooltip
+                        id={`tooltip-${form._id}`}
+                        place="left"
+                        content={
+                          copiedId === form._id
+                            ? `Link Copied`
+                            : `Click to copy the link`
+                        }
+                      />
                     </td>
                   </tr>
                 );

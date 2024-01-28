@@ -4,17 +4,20 @@ import {
   createForm,
   getFormFieldsState,
 } from "../../../store/slices/formSlice";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AddRadioFieldIcon from "../../../UI/Icons/AddRadioFieldIcon";
 import AddCheckBoxIcon from "../../../UI/Icons/AddCheckBoxIcon";
 import AddTextFieldIcon from "../../../UI/Icons/AddTextFieldIcon";
+import LoadingIcon from "../../../UI/Icons/LoadingIcon";
 
 const FormBuilder = () => {
   const idRef = useRef(1);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const getFormDetails = useSelector(getFormFieldsState);
+
+  const [isLoading, setLoading] = useState(false);
 
   const handleAddField = async (fieldType) => {
     let newField;
@@ -66,7 +69,9 @@ const FormBuilder = () => {
       formFields: updatedFormFields,
     };
 
+    setLoading(true);
     const response = await dispatch(createForm(formDetails));
+    setLoading(false);
     if (response.payload) {
       navigate("/forms/view-forms");
     }
@@ -92,7 +97,7 @@ const FormBuilder = () => {
         onClick={SubmitHandler}
         className="text-gray-900 bg-[#F7BE38] hover:bg-[#F7BE38]/90 focus:ring-4 focus:outline-none focus:ring-[#F7BE38]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#F7BE38]/50 mr-2 mb-2"
       >
-        Create Form
+        {isLoading ? <LoadingIcon /> : "Create Form"}
       </button>
     </div>
   );

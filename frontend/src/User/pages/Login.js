@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { getUserState, userLogin } from "../../store/slices/userSlice";
 import { CheckAuth } from "../../Utils/commonFunctions";
+import LoadingIcon from "../../UI/Icons/LoadingIcon";
 
 const Login = () => {
   const [userName, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -29,7 +31,11 @@ const Login = () => {
       password: password,
     };
 
+    setLoading(true);
+
     const response = await dispatch(userLogin(user));
+
+    setLoading(false);
 
     if (response.payload) {
       navigate("/forms");
@@ -103,7 +109,7 @@ const Login = () => {
               </div>
             </div>
             <center>
-              <p className="text-red-500">{error}</p>
+              <p className="text-red-500 text-sm">{error}</p>
             </center>
             <div>
               <button
@@ -111,7 +117,7 @@ const Login = () => {
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 onClick={submitHandler}
               >
-                Sign in
+                {isLoading ? <LoadingIcon /> : "Sign in"}
               </button>
             </div>
           </form>

@@ -9,12 +9,14 @@ import {
   SUCCEEDED,
 } from "../../Utils/constants";
 import { CheckAuth } from "../../Utils/commonFunctions";
+import LoadingIcon from "../../UI/Icons/LoadingIcon";
 
 const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [error, setError] = useState("");
+  const [isLoading, setLoading] = useState(false);
 
   const { id, error: errMsg, status } = useSelector(getUserState);
 
@@ -52,7 +54,11 @@ const Register = () => {
       password: password,
     };
 
+    setLoading(true);
+
     await dispatch(userRegister(user));
+
+    setLoading(false);
 
     if (status === SUCCEEDED && id) {
       navigate("/forms");
@@ -166,7 +172,7 @@ const Register = () => {
                 onClick={submitHandler}
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Sign up
+                {isLoading ? <LoadingIcon /> : "Sign up"}
               </button>
             </div>
           </form>

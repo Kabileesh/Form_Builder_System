@@ -1,10 +1,24 @@
 const LoadingIcon = () => {
   return (
-    <div className="m-28">
+    <div
+      className={`${
+        window.location.pathname === "/login" ||
+        window.location.pathname === "/register" ||
+        window.location.pathname === "/forms/new-form"
+          ? "m-0"
+          : "m-28"
+      }`}
+    >
       <div role="status">
         <svg
           aria-hidden="true"
-          className="inline w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+          className={`inline ${
+            window.location.pathname === "/login" ||
+            window.location.pathname === "/register" ||
+            window.location.pathname === "/forms/new-form"
+              ? "w-5 h-5 fill-white"
+              : "w-8 h-8 fill-blue-600"
+          } mr-2 animate-spin text-gray-600`}
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
