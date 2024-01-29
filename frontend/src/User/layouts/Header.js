@@ -2,6 +2,9 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { getUserState } from "../../store/slices/userSlice";
+import { ProfileIcon } from "../../UI/Icons/ProfileIcon";
 
 const navigation = [
   { name: "Create", href: "/forms/new-form" },
@@ -15,6 +18,8 @@ function classNames(...classes) {
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const { name, username } = useSelector(getUserState);
 
   const handleLogOut = async () => {
     sessionStorage.clear();
@@ -72,18 +77,10 @@ const Header = () => {
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
                   <div>
-                    <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                    <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-1 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
-                      <svg
-                        className="w-8 h-8 rounded-full text-gray-800 dark:text-white"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 20 16"
-                      >
-                        <path d="M18 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM6.5 3a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3.014 13.021l.157-.625A3.427 3.427 0 0 1 6.5 9.571a3.426 3.426 0 0 1 3.322 2.805l.159.622-6.967.023ZM16 12h-3a1 1 0 0 1 0-2h3a1 1 0 0 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Z" />
-                      </svg>
+                      <ProfileIcon />
                     </Menu.Button>
                   </div>
                   <Transition
@@ -97,26 +94,20 @@ const Header = () => {
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
-                        {({ active }) => (
-                          <p
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            Your Profile
-                          </p>
-                        )}
+                        <p className="bg-gray-100 block px-4 py-2 text-base font-sans font-semibold text-gray-900">
+                          {name}
+                        </p>
                       </Menu.Item>
+                      <hr className="w-full h-0.5 mb-2 mx-auto bg-gray-400 border-0 rounded md:my-10" />
                       <Menu.Item>
                         {({ active }) => (
                           <p
                             className={classNames(
                               active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              "block px-4 py-2 font-sans text-sm text-gray-700"
                             )}
                           >
-                            Settings
+                            {username}
                           </p>
                         )}
                       </Menu.Item>
@@ -125,7 +116,7 @@ const Header = () => {
                           <button
                             className={classNames(
                               active ? "bg-gray-100" : "",
-                              "block w-full px-4 py-2 text-sm text-start text-gray-700"
+                              "block w-full px-4 py-2 font-sans text-sm text-start text-gray-700"
                             )}
                             onClick={handleLogOut}
                           >

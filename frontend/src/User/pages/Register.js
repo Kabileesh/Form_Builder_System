@@ -1,7 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useRef, useState } from "react";
-import { getUserState, userRegister } from "../../store/slices/userSlice";
+import { useEffect, useRef, useState } from "react";
+import {
+  clearError,
+  getUserState,
+  userRegister,
+} from "../../store/slices/userSlice";
 import {
   CONFIRM_PASSWORD,
   PASSWORD_MESSAGE,
@@ -17,6 +21,12 @@ const Register = () => {
 
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearError());
+    };
+  }, [dispatch]);
 
   const { id, error: errMsg, status } = useSelector(getUserState);
 
@@ -164,13 +174,17 @@ const Register = () => {
               </div>
             </div>
             <center>
-              <p className="text-red-500">{error ? error : errMsg}</p>
+              <p className="text-red-500 text-sm">{error ? error : errMsg}</p>
             </center>
             <div>
               <button
                 type="submit"
+                className={`${
+                  isLoading ? "" : "hover:bg-indigo-500"
+                } flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
                 onClick={submitHandler}
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                disabled={isLoading}
+                style={{ cursor: isLoading ? "not-allowed" : "pointer" }}
               >
                 {isLoading ? <LoadingIcon /> : "Sign up"}
               </button>

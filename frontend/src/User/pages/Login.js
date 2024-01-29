@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { getUserState, userLogin } from "../../store/slices/userSlice";
+import {
+  clearError,
+  getUserState,
+  userLogin,
+} from "../../store/slices/userSlice";
 import { CheckAuth } from "../../Utils/commonFunctions";
 import LoadingIcon from "../../UI/Icons/LoadingIcon";
 
@@ -12,6 +16,12 @@ const Login = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearError());
+    };
+  }, [dispatch]);
 
   const { error } = useSelector(getUserState);
 
@@ -114,8 +124,12 @@ const Login = () => {
             <div>
               <button
                 type="button"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className={`${
+                  isLoading ? "" : "hover:bg-indigo-500"
+                } flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
                 onClick={submitHandler}
+                disabled={isLoading}
+                style={{ cursor: isLoading ? "not-allowed" : "pointer" }}
               >
                 {isLoading ? <LoadingIcon /> : "Sign in"}
               </button>

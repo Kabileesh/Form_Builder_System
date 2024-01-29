@@ -11,6 +11,7 @@ import {
 
 const initialState = {
   username: "",
+  name: "",
   id: "",
   status: IDLE,
   error: "",
@@ -77,14 +78,19 @@ const userSlice = createSlice({
   reducers: {
     addInfo(state, action) {
       state.username = action.payload.username;
+      state.name = action.payload.name;
       state.id = action.payload._id;
       state.status = SUCCEEDED;
       state.error = null;
     },
     removeInfo(state) {
       state.username = null;
+      state.name = null;
       state.id = null;
       state.status = IDLE;
+      state.error = null;
+    },
+    clearError(state) {
       state.error = null;
     },
   },
@@ -92,24 +98,28 @@ const userSlice = createSlice({
     builder
       .addCase(userLogin.fulfilled, (state, action) => {
         state.username = action.payload.username;
+        state.name = action.payload.name;
         state.id = action.payload._id;
         state.status = SUCCEEDED;
         state.error = null;
       })
       .addCase(userLogin.rejected, (state, action) => {
         state.error = action.error.message;
+        state.name = null;
         state.id = null;
         state.username = null;
         state.status = FAILED;
       })
       .addCase(userRegister.fulfilled, (state, action) => {
         state.username = action.payload.username;
+        state.name = action.payload.name;
         state.id = action.payload._id;
         state.status = SUCCEEDED;
         state.error = null;
       })
       .addCase(userRegister.rejected, (state, action) => {
         state.error = action.error.message;
+        state.name = null;
         state.id = null;
         state.username = null;
         state.status = FAILED;
@@ -117,7 +127,7 @@ const userSlice = createSlice({
   },
 });
 
-export const { addInfo, removeInfo } = userSlice.actions;
+export const { addInfo, removeInfo, clearError } = userSlice.actions;
 
 export const getUserState = (state) => state.user;
 

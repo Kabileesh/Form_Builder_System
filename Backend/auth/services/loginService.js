@@ -21,6 +21,7 @@ const loginService = async (username, password, req, res, next, callback) => {
         const sanitizedUser = {
           _id: user._id,
           username: user.username,
+          name: user.name,
         };
         passport.authenticate("local", { session: false })(
           req,

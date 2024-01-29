@@ -42,6 +42,7 @@ const registerService = async (
         const accessToken = generateToken(id, username);
         const user = {
           username: newUser.username,
+          name: newUser.name,
           _id: id,
         };
         const result = {
