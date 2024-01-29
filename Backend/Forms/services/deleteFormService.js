@@ -9,7 +9,9 @@ const deleteFormService = async (formId, next) => {
   if (globalValidator(formValidator, { formId })) {
     const form = await getForm(formId);
     if (!form) {
-      return next(new CustomError(FORM_NOT_FOUND.message, FORM_NOT_FOUND.status));
+      return next(
+        new CustomError(FORM_NOT_FOUND.message, FORM_NOT_FOUND.status)
+      );
     }
     await deleteForm(formId);
     return true;

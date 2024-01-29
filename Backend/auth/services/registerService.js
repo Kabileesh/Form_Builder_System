@@ -5,7 +5,8 @@ const hashPassword = require("../utils/hashPassword");
 const createUser = require("../db/createUser");
 const generateToken = require("./generateToken");
 const CustomError = require("../../Utils/customError");
-const { UNAUTHORIZED } = require("../../Utils/constants");
+const { UNAUTHORIZED, EMAIL_ALREADY_EXIST } = require("../../Utils/constants");
+const userFind = require("../db/userFind");
 
 const registerService = async (
   username,
@@ -15,6 +16,14 @@ const registerService = async (
   res,
   callback
 ) => {
+  const user = await userFind(username);
+  if (user) {
+    callback(
+      new CustomError(EMAIL_ALREADY_EXIST.message, EMAIL_ALREADY_EXIST.status),
+      null
+    );
+    return;
+  }
   if (globalValidator(registerValidator, { username, password })) {
     const hash = await hashPassword(password);
     const newUser = await createUser(username, name, hash);

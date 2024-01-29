@@ -10,11 +10,12 @@ const loginService = async (username, password, req, res, next, callback) => {
   try {
     if (globalValidator(loginValidator, { username, password })) {
       const user = await userFind(username);
-      if (JSON.stringify(user) === "{}") {
+      if (!user) {
         callback(
           new CustomError(UNAUTHORIZED.message, UNAUTHORIZED.status),
           null
         );
+        return;
       }
       if (user) {
         const sanitizedUser = {
