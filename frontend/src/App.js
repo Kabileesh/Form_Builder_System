@@ -14,6 +14,7 @@ import PrivateRoute from "./Routes/PrivateRoute";
 import RouteSetup from "./Routes/RouteSetup";
 import NotFound from "./UI/Errors/NotFound";
 import UnknownErrors from "./UI/Errors/UnknownErrors";
+import { ServerError } from "./UI/Errors/ServerError";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
           <Route path="/error/*">
             <Route path="not-found" element={<NotFound />} />
             <Route path="unknown" element={<UnknownErrors />} />
+            <Route path="timed-out" element={<ServerError />} />
           </Route>
         </Routes>
       </Router>

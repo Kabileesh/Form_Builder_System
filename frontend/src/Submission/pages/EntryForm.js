@@ -13,7 +13,6 @@ import {
 } from "../../store/slices/submissionSlice";
 import CheckBoxInput from "../components/CheckBoxInput";
 import LoadingIcon from "../../UI/Icons/LoadingIcon";
-import { ErrorHandler } from "../../Utils/ErrorHandler";
 
 const EntryForm = () => {
   const formDetails = useSelector(getFormState);
@@ -36,8 +35,8 @@ const EntryForm = () => {
     const getFormDetails = async () => {
       setLoading(true);
       const response = await dispatch(getForm(formId));
+      if (error || !response?.payload) return;
       await dispatch(setFormDetails(response?.payload.data.form));
-      ErrorHandler(error);
       setLoading(false);
     };
     getFormDetails();

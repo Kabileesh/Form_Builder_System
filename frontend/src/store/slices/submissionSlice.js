@@ -22,7 +22,6 @@ export const getForm = createAsyncThunk(
       ) {
         return response;
       }
-      return response;
     } catch (err) {
       const error = err;
       error.message = err.response.data?.message;
