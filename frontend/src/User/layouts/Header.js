@@ -98,7 +98,7 @@ const Header = () => {
                           {name}
                         </p>
                       </Menu.Item>
-                      <hr className="w-full h-0.5 mb-2 mx-auto bg-gray-400 border-0 rounded md:my-10" />
+                      <hr className="w-full h-0.5 mb-2 bg-gray-400 border-0 rounded" />
                       <Menu.Item>
                         {({ active }) => (
                           <p
