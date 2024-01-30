@@ -1,22 +1,13 @@
 import { Link } from "react-router-dom";
 import Header from "../../User/layouts/Header";
 
-const NotFound = () => {
+export const ServerError = () => {
   return (
     <>
       <Header />
       <main className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
         <div className="text-center">
-          <div className="flex flex-col items-center">
-            <img
-              className="h-1/2 w-1/2"
-              src="/images/NotFound_404.jpg"
-              alt=""
-            />
-          </div>
-          <p className="mt-6 text-base text-lg font-semibold leading-7 text-red-500">
-            Sorry, we couldn’t find the page you’re looking for.
-          </p>
+          <img src="/images/Internal_Server_Error_500.jpg" alt="" />
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <Link
               to={"/forms"}
@@ -30,5 +21,3 @@ const NotFound = () => {
     </>
   );
 };
-
-export default NotFound;

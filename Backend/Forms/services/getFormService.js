@@ -5,18 +5,14 @@ const globalValidator = require("../../Utils/globalValidators");
 const getForm = require("../db/getForm");
 const formValidator = require("../validators/formValidator");
 
-const getFormService = async (formId, id, next) => {
+const getFormService = async (formId, id) => {
   if (globalValidator(formValidator, { formId })) {
     if (!formId) {
-      return next(
-        new CustomError(INVALID_FORM_ID.message, INVALID_FORM_ID.status)
-      );
+      throw new CustomError(INVALID_FORM_ID.message, INVALID_FORM_ID.status);
     }
     const form = await getForm(formId);
     if (!form) {
-      return next(
-        new CustomError(FORM_NOT_FOUND.message, FORM_NOT_FOUND.status)
-      );
+      throw new CustomError(FORM_NOT_FOUND.message, FORM_NOT_FOUND.status);
     }
     const filledForm = await checkSubmission(formId, id);
     let formData;
