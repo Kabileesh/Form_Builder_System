@@ -24,7 +24,9 @@ export const userLogin = createAsyncThunk("user/userLogin", async (user) => {
       response?.status === LOGIN_SUCCESS.status &&
       response?.data.message === LOGIN_SUCCESS.message
     ) {
+      const { _id, ...sanitizedUser } = response?.data.user;
       sessionStorage.setItem("accessToken", response?.data.accessToken);
+      sessionStorage.setItem("userDetails", JSON.stringify(sanitizedUser));
       return response.data.user;
     }
   } catch (err) {
@@ -43,7 +45,9 @@ export const userRegister = createAsyncThunk(
         response?.status === REGISTER_SUCCESS.status &&
         response?.data.message === REGISTER_SUCCESS.message
       ) {
+        const { _id, ...sanitizedUser } = response?.data.user;
         sessionStorage.setItem("accessToken", response?.data.accessToken);
+        sessionStorage.setItem("userDetails", JSON.stringify(sanitizedUser));
         return response?.data.user;
       }
     } catch (err) {

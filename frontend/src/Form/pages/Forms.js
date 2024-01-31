@@ -31,7 +31,7 @@ const Forms = () => {
 
   const HandleCopyClick = (_id) => {
     setCopiedId(_id);
-    copy(`http://localhost:3000/forms/form/${_id}`);
+    copy(`${window.location.origin}/forms/form/${_id}`);
     toast.success("Link Copied", toastConfig);
   };
 
@@ -48,70 +48,72 @@ const Forms = () => {
           <BackButton />
         </div>
       ) : (
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg my-7 mx-8">
+        <>
           <BackButton />
-          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th scope="col" className="px-6 py-3">
-                  Form Title
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Created At
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Responses
-                </th>
-                <th scope="col" className="px-6 py-3"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {forms.map((form, index) => {
-                return (
-                  <tr
-                    className="bg-white border-b dark:bg-gray-900 dark:border-gray-700"
-                    key={index}
-                  >
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          <div className="relative overflow-x-auto shadow-md sm:rounded-lg my-7 mx-8">
+            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                  <th scope="col" className="px-6 py-3">
+                    Form Title
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Created At
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Responses
+                  </th>
+                  <th scope="col" className="px-6 py-3"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {forms.map((form, index) => {
+                  return (
+                    <tr
+                      className="bg-white border-b dark:bg-gray-900 dark:border-gray-700"
+                      key={index}
                     >
-                      {form.title}
-                    </th>
-                    <td className="px-6 py-4">
-                      {form.createdAt.split("T")[0]}
-                    </td>
-                    <td className="px-6 py-4">
-                      <Link
-                        className="hover:underline hover:text-blue-600"
-                        to={`/forms/view-responses/${form._id}`}
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                       >
-                        View Responses
-                      </Link>
-                    </td>
-                    <td className="px-6 py-4">
-                      <button
-                        data-tooltip-id={`tooltip-${form._id}`}
-                        onClick={() => HandleCopyClick(form._id)}
-                      >
-                        <ClipBoardIcon isCopied={copiedId === form._id} />
-                      </button>
-                      <Tooltip
-                        id={`tooltip-${form._id}`}
-                        place="left"
-                        content={
-                          copiedId === form._id
-                            ? `Link Copied`
-                            : `Click to copy the link`
-                        }
-                      />
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+                        {form.title}
+                      </th>
+                      <td className="px-6 py-4">
+                        {form.createdAt.split("T")[0]}
+                      </td>
+                      <td className="px-6 py-4">
+                        <Link
+                          className="hover:underline hover:text-blue-600"
+                          to={`/forms/view-responses/${form._id}`}
+                        >
+                          View Responses
+                        </Link>
+                      </td>
+                      <td className="px-6 py-4">
+                        <button
+                          data-tooltip-id={`tooltip-${form._id}`}
+                          onClick={() => HandleCopyClick(form._id)}
+                        >
+                          <ClipBoardIcon isCopied={copiedId === form._id} />
+                        </button>
+                        <Tooltip
+                          id={`tooltip-${form._id}`}
+                          place="left"
+                          content={
+                            copiedId === form._id
+                              ? `Link Copied`
+                              : `Click to copy the link`
+                          }
+                        />
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </>
       )}
       <ToastContainer />
     </>

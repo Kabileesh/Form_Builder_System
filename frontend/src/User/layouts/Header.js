@@ -2,8 +2,6 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { getUserState } from "../../store/slices/userSlice";
 import { ProfileIcon } from "../../UI/Icons/ProfileIcon";
 
 const navigation = [
@@ -19,7 +17,7 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { name, username } = useSelector(getUserState);
+  const { name, username } = JSON.parse(window.sessionStorage.getItem("userDetails"));
 
   const handleLogOut = async () => {
     sessionStorage.clear();

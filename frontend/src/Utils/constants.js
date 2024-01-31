@@ -27,10 +27,10 @@ export const REMOVE_FORM_FIELD = "REMOVE_FORM_FIELD";
 export const UPDATE_RADIO_FIELD = "UPDATE_RADIO_FIELD";
 
 export const toastConfig = {
-  position: toast.POSITION.BOTTOM_RIGHT,
+  position: toast.POSITION.TOP_RIGHT,
   autoClose: 1500,
   theme: "dark",
-  className: "text-xs",
+  className: "text-xs w-2/3 mx-24 my-16 rounded-xl",
 };
 
 // 2XX

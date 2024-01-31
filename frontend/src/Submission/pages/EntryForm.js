@@ -13,6 +13,7 @@ import {
 } from "../../store/slices/submissionSlice";
 import CheckBoxInput from "../components/CheckBoxInput";
 import LoadingIcon from "../../UI/Icons/LoadingIcon";
+import Description from "../../UI/Components/Description";
 
 const EntryForm = () => {
   const formDetails = useSelector(getFormState);
@@ -92,8 +93,9 @@ const EntryForm = () => {
           <LoadingIcon />
         </div>
       ) : (
-        <div className="h-full flex flex-col justify-center gap-8 items-center shadow-sm bg-green-100">
-          <div className="mt-10 sm:mx-auto sm:w-3/4 lg:w-3/4">
+        <div className="h-full flex flex-col justify-top gap-8 items-center shadow-sm bg-green-100">
+          <Description />
+          <div className="mt-2 sm:mx-auto sm:w-3/4 lg:w-3/4">
             <div className="space-y-6 mx-auto w-90">
               <div className="relative z-0 ml-auto">
                 <div className="relative z-0 ml-auto">
