@@ -59,6 +59,11 @@ const formSlice = createSlice({
     removeFormField(state, action) {
       state.formFields = action.payload;
     },
+    removeFormInfo(state) {
+      state.formTitle = "";
+      state.formDescription = "";
+      state.formFields = [];
+    },
   },
 });
 
@@ -68,6 +73,7 @@ export const {
   addFormField,
   updateFormField,
   removeFormField,
+  removeFormInfo,
 } = formSlice.actions;
 
 export const getFormFieldsState = (state) => state.form;

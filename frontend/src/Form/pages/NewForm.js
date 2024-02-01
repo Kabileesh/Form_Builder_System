@@ -27,7 +27,7 @@ const NewForm = () => {
       <div className="flex flex-col justify-center items-center shadow-sm bg-green-100">
         <div className="mt-10 sm:mx-auto sm:w-3/4 lg:w-3/4">
           <form
-            className="space-y-6 mx-auto w-90"
+            className="space-y-6 mx-8 w-90"
             onSubmit={(e) => {
               e.preventDefault();
             }}
@@ -81,7 +81,7 @@ const NewForm = () => {
               </div>
             </div>
             <div>
-              {formFields.length !== 0
+              {formFields && formFields.length !== 0
                 ? formFields.map((field, index) => {
                     return (
                       <Question

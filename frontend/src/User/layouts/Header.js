@@ -3,6 +3,10 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ProfileIcon } from "../../UI/Icons/ProfileIcon";
+import { useDispatch } from "react-redux";
+import { removeInfo } from "../../store/slices/userSlice";
+import { removeFormField } from "../../store/slices/formSlice";
+import { removeSubmissionInfo } from "../../store/slices/submissionSlice";
 
 const navigation = [
   { name: "Create", href: "/forms/new-form" },
@@ -17,11 +21,19 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { name, username } = JSON.parse(window.sessionStorage.getItem("userDetails"));
+  const dispatch = useDispatch();
+
+  const { name, username } = JSON.parse(
+    window.sessionStorage.getItem("userDetails")
+  );
 
   const handleLogOut = async () => {
+    await dispatch(removeInfo());
+    await dispatch(removeFormField());
+    await dispatch(removeSubmissionInfo());
+    window.location.reload();
     sessionStorage.clear();
-    navigate("/");
+    navigate("/login");
   };
 
   return (

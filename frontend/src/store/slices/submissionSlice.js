@@ -86,6 +86,14 @@ const submissionSlice = createSlice({
     setFieldValues(state, action) {
       state.fieldValues = action.payload;
     },
+    removeSubmissionInfo(state) {
+      state._id = null;
+      state.title = null;
+      state.description = null;
+      state.formFields = [];
+      state.fieldValues = [];
+      state.error = null;
+    },
   },
   extraReducers(builder) {
     builder
@@ -106,7 +114,8 @@ const submissionSlice = createSlice({
   },
 });
 
-export const { setFormDetails, setFieldValues } = submissionSlice.actions;
+export const { setFormDetails, setFieldValues, removeSubmissionInfo } =
+  submissionSlice.actions;
 
 export const getFormState = (state) => state.submission;
 
