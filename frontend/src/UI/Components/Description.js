@@ -6,10 +6,10 @@ const Description = () => {
       <p className="font-semibold mb-2 flex gap-4">
         <img
           className="w-6 h-6 rounded-2xl self-center"
-          src="/images/formLabLogo.png"
+          src="/images/myForms.png"
           alt=""
         />
-        Welcome to FormLab - Create custom forms effortlessly
+        Welcome to MyForms - Create custom forms effortlessly
       </p>
       <Link
         className="text-blue-600 text-xs underline"
@@ -19,7 +19,7 @@ const Description = () => {
         Create your forms
       </Link>
       <p className="text-sm mt-4">
-        FormLab retains the right to moderate and remove forms that violate our
+        MyForms retains the right to moderate and remove forms that violate our
         terms of service or are deemed inappropriate. For more information,
         refer to our Terms of Service and Privacy Policy.
       </p>

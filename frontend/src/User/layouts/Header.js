@@ -59,7 +59,7 @@ const Header = () => {
                   <Link to={"/forms"}>
                     <img
                       className="h-10 w-20 box-border rounded-2xl mr-10"
-                      src="/images/formLab.png"
+                      src="/images/myForms.png"
                       alt=""
                     />
                   </Link>
